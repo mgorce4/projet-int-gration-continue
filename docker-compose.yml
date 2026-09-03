@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: tictactoe-postgres
+    environment:
+      POSTGRES_DB: tictactoedb
+      POSTGRES_USER: tictactoe
+      POSTGRES_PASSWORD: tictactoepass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tictactoe -d tictactoedb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - tictactoe-net
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: tictactoe-backend:latest
+    container_name: tictactoe-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/tictactoedb
+      SPRING_DATASOURCE_USERNAME: tictactoe
+      SPRING_DATASOURCE_PASSWORD: tictactoepass
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - tictactoe-net
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: tictactoe-frontend:latest
+    container_name: tictactoe-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - tictactoe-net
+    restart: unless-stopped
+
+networks:
+  tictactoe-net:
+    driver: bridge
+
+volumes:
+  postgres-data:

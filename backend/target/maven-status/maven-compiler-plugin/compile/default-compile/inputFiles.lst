@@ -1,0 +1,10 @@
+/app/src/main/java/com/example/tictactoe/config/WebConfig.java
+/app/src/main/java/com/example/tictactoe/service/GameService.java
+/app/src/main/java/com/example/tictactoe/model/GameMode.java
+/app/src/main/java/com/example/tictactoe/TictactoeApplication.java
+/app/src/main/java/com/example/tictactoe/repository/GameScoreRepository.java
+/app/src/main/java/com/example/tictactoe/model/MoveRequest.java
+/app/src/main/java/com/example/tictactoe/controller/GameController.java
+/app/src/main/java/com/example/tictactoe/entity/GameScoreEntity.java
+/app/src/main/java/com/example/tictactoe/model/GameState.java
+/app/src/main/java/com/example/tictactoe/model/Player.java
