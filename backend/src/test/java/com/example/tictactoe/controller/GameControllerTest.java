@@ -87,4 +87,28 @@ class GameControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.currentPlayer").value("X"));
     }
+
+    @Test
+    @DisplayName("POST /api/game/reset-scores - Devrait réinitialiser les scores")
+    void testResetScores() throws Exception {
+        GameState mockState = new GameState();
+        given(gameService.resetScores()).willReturn(mockState);
+
+        mockMvc.perform(post("/api/game/reset-scores"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.scoreX").value(0))
+                .andExpect(jsonPath("$.scoreO").value(0));
+    }
+
+    @Test
+    @DisplayName("POST /api/game/mode - Devrait changer le mode de jeu")
+    void testSetGameMode() throws Exception {
+        GameState mockState = new GameState();
+        mockState.setGameMode(GameMode.VS_AI);
+        given(gameService.setGameMode(GameMode.VS_AI)).willReturn(mockState);
+
+        mockMvc.perform(post("/api/game/mode?mode=VS_AI"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.gameMode").value("VS_AI"));
+    }
 }
