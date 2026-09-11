@@ -16,6 +16,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Permissions minimales par défaut (lecture seule) ; chaque job qui a besoin
+# d'écrire (commentaire de couverture sur une PR, upload SARIF) déclare
+# explicitement ce dont il a besoin dans son propre bloc "permissions".
+permissions:
+  contents: read
+
 jobs:
 
   # ---------------------------------------------------------------------
@@ -24,6 +30,9 @@ jobs:
   backend-tests:
     name: Backend - Build & Tests unitaires
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Récupération du code
         uses: actions/checkout@v4
@@ -59,6 +68,20 @@ jobs:
             backend/target/test-classes
             backend/target/site/jacoco
           retention-days: 1
+
+      # Retour de couverture backend : commente la pull request avec le
+      # pourcentage de lignes/branches couvertes, ligne par ligne sur les
+      # fichiers modifiés. Ne s'exécute que sur les PR (rien à commenter
+      # sur un simple push sur main) ; le détail complet reste consultable
+      # dans le rapport JaCoCo (artefact) et sur le dashboard SonarCloud.
+      - name: Retour de couverture sur la pull request (JaCoCo)
+        if: github.event_name == 'pull_request'
+        uses: madrapps/jacoco-report@v1.6.1
+        with:
+          paths: backend/target/site/jacoco/jacoco.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: 'Couverture de code - Backend (JaCoCo)'
+          update-comment: true
 
   # ---------------------------------------------------------------------
   # 2. Convention de codage backend (Checkstyle)
@@ -96,6 +119,9 @@ jobs:
   frontend-tests:
     name: Frontend - Build & Tests unitaires
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
@@ -124,6 +150,16 @@ jobs:
           name: frontend-coverage
           path: frontend/coverage/
           retention-days: 1
+
+      # Retour de couverture frontend : équivalent du step JaCoCo côté
+      # backend, mais pour Vitest. Nécessite les reporters 'json-summary' et
+      # 'json' déclarés dans vite.config.js (bloc test.coverage.reporter).
+      - name: Retour de couverture sur la pull request (Vitest)
+        if: github.event_name == 'pull_request'
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          json-summary-path: frontend/coverage/coverage-summary.json
+          json-final-path: frontend/coverage/coverage-final.json
 
   # ---------------------------------------------------------------------
   # 4. Analyse statique frontend (ESLint) - reporting, non bloquant
@@ -197,6 +233,9 @@ jobs:
   dependency-scan:
     name: Vérification des dépendances (Trivy)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     steps:
       - uses: actions/checkout@v4
 
