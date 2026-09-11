@@ -1,5 +1,6 @@
 # Maven & Java
 target/
+backend/target/
 *.class
 *.jar
 *.war
@@ -8,17 +9,26 @@ target/
 
 # Node & Frontend
 node_modules/
+frontend/node_modules/
 dist/
+frontend/dist/
 dist-ssr/
 coverage/
+frontend/coverage/
+npm-debug.log*
 *.local
 .nx/
 
 # H2 & Database files
 data/
+backend/data/
 *.db
 *.mv.db
 *.trace.db
+
+# Outils de qualité
+.scannerwork/
+.sonar/
 
 # IDE & System files
 .idea/
@@ -27,3 +37,6 @@ data/
 .DS_Store
 Thumbs.db
 *.log
+
+# Divers
+.env

@@ -181,6 +181,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+      # Contrairement à Checkstyle et Trivy (volontairement en mode rapport),
+      # le Quality Gate SonarCloud est ici bloquant : si le code ne respecte
+      # pas les seuils définis (bugs, vulnérabilités, duplication, couverture
+      # minimale...), ce step échoue et fait échouer toute la pipeline.
+      - name: Vérification du Quality Gate (bloquant)
+        uses: sonarsource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   # ---------------------------------------------------------------------
   # 6. Vérification des dépendances / scan de vulnérabilités (Trivy)
   # ---------------------------------------------------------------------

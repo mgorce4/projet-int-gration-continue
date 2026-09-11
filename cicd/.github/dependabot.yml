@@ -1,0 +1,46 @@
+# Dependabot ouvre automatiquement une pull request dès qu'une dépendance a
+# une nouvelle version disponible. Il complète Trivy : Trivy détecte les
+# vulnérabilités connues sur ce qui est déjà installé, Dependabot propose la
+# mise à jour qui corrige le problème (ou simplement qui suit les dernières
+# versions, même hors contexte de sécurité).
+version: 2
+updates:
+
+  # Dépendances Maven du backend
+  - package-ecosystem: maven
+    directory: /backend
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - backend
+    commit-message:
+      prefix: chore(deps-backend)
+
+  # Dépendances npm du frontend
+  - package-ecosystem: npm
+    directory: /frontend
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - frontend
+    commit-message:
+      prefix: chore(deps-frontend)
+
+  # Les actions GitHub elles-mêmes (actions/checkout, sonarcloud-github-action...)
+  # sont aussi des dépendances externes versionnées, souvent oubliées
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+      - ci
+    commit-message:
+      prefix: chore(deps-ci)

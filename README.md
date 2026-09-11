@@ -1,5 +1,10 @@
 # 🎮 Jeu du Morpion (Tic-Tac-Toe Neo)
 
+[![CI/CD Pipeline](https://github.com/mgorce4/projet-int-gration-continue/actions/workflows/ci.yml/badge.svg)](https://github.com/mgorce4/projet-int-gration-continue/actions/workflows/ci.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mgorce4_projet-int-gration-continue&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=mgorce4_projet-int-gration-continue)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=mgorce4_projet-int-gration-continue&metric=coverage)](https://sonarcloud.io/summary/new_code?id=mgorce4_projet-int-gration-continue)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=mgorce4_projet-int-gration-continue&metric=bugs)](https://sonarcloud.io/summary/new_code?id=mgorce4_projet-int-gration-continue)
+
 Projet complet de jeu de Morpion développé avec **Vue.js 3** (Frontend), **Java Spring Boot 3** (Backend), entièrement conteneurisé avec **Docker Compose** et couvert par des **tests unitaires**.
 
 ---
