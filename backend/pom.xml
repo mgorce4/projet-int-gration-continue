@@ -22,7 +22,7 @@
         <!-- Versions centralisées des plugins de qualité utilisés dans la CI -->
         <jacoco.version>0.8.11</jacoco.version>
         <checkstyle.plugin.version>3.3.1</checkstyle.plugin.version>
-        <checkstyle.version>10.14.0</checkstyle.version>
+        <checkstyle.version>14.1.0</checkstyle.version>
         <sonar.plugin.version>3.11.0.3922</sonar.plugin.version>
 
         <!-- Emplacement du rapport de couverture, lu ensuite par SonarCloud -->
