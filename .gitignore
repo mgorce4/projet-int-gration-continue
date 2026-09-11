@@ -1,0 +1,29 @@
+# Maven & Java
+target/
+*.class
+*.jar
+*.war
+.mvn/
+.mvn/wrapper/maven-wrapper.jar
+
+# Node & Frontend
+node_modules/
+dist/
+dist-ssr/
+coverage/
+*.local
+.nx/
+
+# H2 & Database files
+data/
+*.db
+*.mv.db
+*.trace.db
+
+# IDE & System files
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
