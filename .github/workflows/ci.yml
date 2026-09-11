@@ -245,7 +245,7 @@ jobs:
       # l'instant (voir discussion dans le rapport sur le passage en mode
       # bloquant une fois les vulnérabilités existantes traitées).
       - name: Scan de vulnérabilités des dépendances
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: fs
           scan-ref: .
