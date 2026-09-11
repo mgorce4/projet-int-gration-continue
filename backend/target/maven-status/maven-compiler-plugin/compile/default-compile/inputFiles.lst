@@ -1,10 +1,10 @@
-/app/src/main/java/com/example/tictactoe/config/WebConfig.java
-/app/src/main/java/com/example/tictactoe/service/GameService.java
-/app/src/main/java/com/example/tictactoe/model/GameMode.java
-/app/src/main/java/com/example/tictactoe/TictactoeApplication.java
-/app/src/main/java/com/example/tictactoe/repository/GameScoreRepository.java
-/app/src/main/java/com/example/tictactoe/model/MoveRequest.java
-/app/src/main/java/com/example/tictactoe/controller/GameController.java
-/app/src/main/java/com/example/tictactoe/entity/GameScoreEntity.java
-/app/src/main/java/com/example/tictactoe/model/GameState.java
-/app/src/main/java/com/example/tictactoe/model/Player.java
+C:\Users\Max\Desktop\others\2026-2027\S5\R5A.07\projet intégration continue\backend\src\main\java\com\example\tictactoe\model\GameMode.java
+C:\Users\Max\Desktop\others\2026-2027\S5\R5A.07\projet intégration continue\backend\src\main\java\com\example\tictactoe\config\WebConfig.java
+C:\Users\Max\Desktop\others\2026-2027\S5\R5A.07\projet intégration continue\backend\src\main\java\com\example\tictactoe\model\Player.java
+C:\Users\Max\Desktop\others\2026-2027\S5\R5A.07\projet intégration continue\backend\src\main\java\com\example\tictactoe\service\GameService.java
+C:\Users\Max\Desktop\others\2026-2027\S5\R5A.07\projet intégration continue\backend\src\main\java\com\example\tictactoe\repository\GameScoreRepository.java
+C:\Users\Max\Desktop\others\2026-2027\S5\R5A.07\projet intégration continue\backend\src\main\java\com\example\tictactoe\controller\GameController.java
+C:\Users\Max\Desktop\others\2026-2027\S5\R5A.07\projet intégration continue\backend\src\main\java\com\example\tictactoe\entity\GameScoreEntity.java
+C:\Users\Max\Desktop\others\2026-2027\S5\R5A.07\projet intégration continue\backend\src\main\java\com\example\tictactoe\model\GameState.java
+C:\Users\Max\Desktop\others\2026-2027\S5\R5A.07\projet intégration continue\backend\src\main\java\com\example\tictactoe\TictactoeApplication.java
+C:\Users\Max\Desktop\others\2026-2027\S5\R5A.07\projet intégration continue\backend\src\main\java\com\example\tictactoe\model\MoveRequest.java
