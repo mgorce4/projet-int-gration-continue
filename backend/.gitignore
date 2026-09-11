@@ -1,9 +1,0 @@
-target/
-*.class
-*.jar
-*.war
-.mvn/
-data/
-*.db
-.idea/
-*.iml
