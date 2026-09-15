@@ -125,10 +125,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Installation Node.js 20
+      - name: Installation Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 
@@ -172,7 +172,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 
@@ -213,8 +213,7 @@ jobs:
 
       # Étape de diagnostic : confirme que les rapports attendus par
       # sonar-project.properties existent réellement à cet endroit avant de
-      # lancer le scan. Si l'un des "test -f" échoue ici, le problème vient
-      # de l'upload/download d'artefact (job précédent), pas de SonarCloud.
+      # lancer le scan.
       - name: Vérification des rapports de couverture avant analyse
         run: |
           echo "--- Contenu de backend/target ---"
@@ -229,9 +228,6 @@ jobs:
             && echo "OK : lcov.info présent" \
             || echo "MANQUANT : frontend/coverage/lcov.info"
 
-      # sonar.verbose=true : temporaire, le temps de diagnostiquer le
-      # problème de couverture manquante. À retirer une fois confirmé que
-      # les rapports JaCoCo/lcov sont bien importés (logs plus lisibles sans).
       - name: Analyse SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
         env:
@@ -241,10 +237,7 @@ jobs:
           args: >
             -Dsonar.verbose=true
 
-      # Contrairement à Checkstyle et Trivy (volontairement en mode rapport),
-      # le Quality Gate SonarCloud est ici bloquant : si le code ne respecte
-      # pas les seuils définis (bugs, vulnérabilités, duplication, couverture
-      # minimale...), ce step échoue et fait échouer toute la pipeline.
+      # Quality Gate bloquant
       - name: Vérification du Quality Gate (bloquant)
         uses: sonarsource/sonarqube-quality-gate-action@master
         timeout-minutes: 5
@@ -263,10 +256,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # scan-type "fs" : analyse le pom.xml et le package-lock.json à la
-      # recherche de CVE connues sur les dépendances utilisées.
-      # exit-code 0 = rapport informatif, n'échoue pas la pipeline pour
-      # l'instant.
       - name: Scan de vulnérabilités des dépendances
         uses: aquasecurity/trivy-action@v0.36.0
         with:

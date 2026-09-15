@@ -1,9 +1,12 @@
 # Build stage
-FROM node:20-alpine AS build
+FROM node:22-alpine AS build
 WORKDIR /app
+
 COPY package*.json ./
-RUN npm install
+RUN npm ci
+
 COPY . .
+RUN chmod +x node_modules/.bin/* || true
 RUN npm run build
 
 # Production stage
