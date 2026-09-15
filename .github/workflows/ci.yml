@@ -211,11 +211,35 @@ jobs:
           name: frontend-coverage
           path: frontend/coverage
 
+      # Étape de diagnostic : confirme que les rapports attendus par
+      # sonar-project.properties existent réellement à cet endroit avant de
+      # lancer le scan. Si l'un des "test -f" échoue ici, le problème vient
+      # de l'upload/download d'artefact (job précédent), pas de SonarCloud.
+      - name: Vérification des rapports de couverture avant analyse
+        run: |
+          echo "--- Contenu de backend/target ---"
+          find backend/target -maxdepth 4 -type f | sort
+          echo "--- Contenu de frontend/coverage ---"
+          find frontend/coverage -maxdepth 2 -type f | sort
+          echo "--- Vérification des fichiers attendus ---"
+          test -f backend/target/site/jacoco/jacoco.xml \
+            && echo "OK : jacoco.xml présent" \
+            || echo "MANQUANT : backend/target/site/jacoco/jacoco.xml"
+          test -f frontend/coverage/lcov.info \
+            && echo "OK : lcov.info présent" \
+            || echo "MANQUANT : frontend/coverage/lcov.info"
+
+      # sonar.verbose=true : temporaire, le temps de diagnostiquer le
+      # problème de couverture manquante. À retirer une fois confirmé que
+      # les rapports JaCoCo/lcov sont bien importés (logs plus lisibles sans).
       - name: Analyse SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.verbose=true
 
       # Contrairement à Checkstyle et Trivy (volontairement en mode rapport),
       # le Quality Gate SonarCloud est ici bloquant : si le code ne respecte
