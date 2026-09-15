@@ -99,8 +99,8 @@ jobs:
           cache: maven
           cache-dependency-path: backend/pom.xml
 
-      # failsOnError=false dans le pom : ce job remonte les violations sans
-      # bloquer la pipeline (voir justification dans le rapport)
+      # failsOnError=false et failOnViolation=false dans le pom : ce job remonte
+      # les violations sans bloquer la pipeline
       - name: Analyse Checkstyle (règles Google)
         working-directory: backend
         run: mvn -B checkstyle:check
@@ -266,10 +266,9 @@ jobs:
       # scan-type "fs" : analyse le pom.xml et le package-lock.json à la
       # recherche de CVE connues sur les dépendances utilisées.
       # exit-code 0 = rapport informatif, n'échoue pas la pipeline pour
-      # l'instant (voir discussion dans le rapport sur le passage en mode
-      # bloquant une fois les vulnérabilités existantes traitées).
+      # l'instant.
       - name: Scan de vulnérabilités des dépendances
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: fs
           scan-ref: .

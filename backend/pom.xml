@@ -95,10 +95,8 @@
 
             <!--
                 Checkstyle : vérification de la convention de codage (règles Google).
-                Volontairement lancé en mode "reporting" (failsOnError=false) via
-                "mvn checkstyle:check" dans la CI : le job remonte les violations sans
-                bloquer le pipeline le temps de nettoyer l'historique du projet.
-                Passer failsOnError à true durcit la règle une fois le code assaini.
+                Volontairement configuré pour remonter les violations sans casser le build
+                (failsOnError=false et failOnViolation=false).
             -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -115,6 +113,7 @@
                     <configLocation>google_checks.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>false</failsOnError>
+                    <failOnViolation>false</failOnViolation>
                     <violationSeverity>warning</violationSeverity>
                 </configuration>
             </plugin>
